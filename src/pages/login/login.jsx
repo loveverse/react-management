@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button,message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 import './login.less'
 import logo from './images/avator.jpg'
+// 分别暴露需要结构，默认暴露直接引入
+import { reqLogin } from '../../api'
+import memoryUtils from '../../utils/memoryUtils';
 
 
 
@@ -23,8 +26,9 @@ export default class Login extends Component {
                         name="normal_login"
                         className="login-form"
                         initialValues={{ remember: true }}
-                        
                         onFinish={this.onFinish}
+                        // 不记录上次输入的内容
+                        autoComplete="off"
                     >
                         <Form.Item
                             name="username"
@@ -35,7 +39,7 @@ export default class Login extends Component {
                                 { min: 4, message: '用户名至少4位!' },
                                 { max: 12, message: '用户名最多12位!' },
                                 { pattern: /^[a-zA-Z0-9_]+$/, message: '用户名必须是英文、数字或下划线组成!' },
-
+                                // { initialValues: "admin" }
                             ]}
                         >
                             <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="用户名" />
@@ -65,8 +69,32 @@ export default class Login extends Component {
     }
 
     // 	提交表单且数据验证成功后回调事件
-    onFinish = values => {
-        console.log("校验成功", values);
+    onFinish = async (values) => {
+        // console.log("校验成功", values);
+
+        // 请求登录
+        const {username, password} = values
+        const result = await reqLogin(username,password)
+        console.log(result);     
+        if(result.status === 0){
+            message.success("登录成功")
+            // 保存user
+            const user = result.data
+            memoryUtils.user = user
+
+
+            // 登录成功需要跳转到管理界面
+            // 不需要回退回来，需要回退用push
+            this.props.history.replace('/')
+        }else{
+            // 提示错误信息
+            message.error(result.msg)
+        }
+        // .then(response => {
+        //     console.log("成功",response.data);
+        // }).catch(error => {
+        //     console.log("失败了", error);
+        // })
     };
 
 
@@ -76,11 +104,11 @@ export default class Login extends Component {
             return Promise.reject("密码必须输入")
         } else if (value.length < 4) {
             return Promise.reject("密码不能小于4位")
-        } else if (value.length > 12){
+        } else if (value.length > 12) {
             return Promise.reject("密码不能大于12位")
-        }else if(!/^[a-zA-Z0-9_]+$/.test(value)){
+        } else if (!/^[a-zA-Z0-9_]+$/.test(value)) {
             return Promise.reject("用户名必须是英文、数字或下划线组成!")
-        }else{
+        } else {
             // 验证通过
             return Promise.resolve()
         }
