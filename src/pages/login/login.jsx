@@ -1,18 +1,26 @@
 import React, { Component } from 'react'
-
-import { Form, Input, Button,message } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Redirect } from 'react-router-dom'
+
 
 import './login.less'
-import logo from './images/avator.jpg'
+import logo from '../../assets/images/avator.jpg'
 // 分别暴露需要结构，默认暴露直接引入
 import { reqLogin } from '../../api'
 import memoryUtils from '../../utils/memoryUtils';
+import storageUtils from '../../utils/storageUtils'
 
 
 
 export default class Login extends Component {
     render() {
+
+        // 如果用户已经登录,自动跳转到管理界面
+        const user = memoryUtils.user
+        if (user && user._id) {
+            return <Redirect to="/" />
+        }
         return (
             <div className="login">
                 <header className="login-header">
@@ -73,20 +81,21 @@ export default class Login extends Component {
         // console.log("校验成功", values);
 
         // 请求登录
-        const {username, password} = values
-        const result = await reqLogin(username,password)
-        console.log(result);     
-        if(result.status === 0){
+        const { username, password } = values
+        const result = await reqLogin(username, password)
+        console.log(result);
+        if (result.status === 0) {
             message.success("登录成功")
             // 保存user
             const user = result.data
-            memoryUtils.user = user
+            memoryUtils.user = user // 保存在内存
+            storageUtils.saveUser(user) // 保存在local中
 
 
             // 登录成功需要跳转到管理界面
             // 不需要回退回来，需要回退用push
             this.props.history.replace('/')
-        }else{
+        } else {
             // 提示错误信息
             message.error(result.msg)
         }

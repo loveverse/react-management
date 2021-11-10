@@ -1,6 +1,6 @@
 import { Component } from 'react';
 // import { message,Button } from 'antd'
-import { BrowserRouter, HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import Login from './pages/login/login'
 import Admin from './pages/admin/admin'
