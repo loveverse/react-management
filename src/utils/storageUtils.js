@@ -4,7 +4,7 @@ const USER_KEY = 'user_key'
 export default {
     // 保存
     saveUser(user){
-        store.set(USER_KEY, )
+        store.set(USER_KEY, user)
         // localStorage.setItem(USER_KEY,JSON.stringify(user))
     },
 

@@ -1,5 +1,4 @@
 import { Component } from 'react';
-// import { message,Button } from 'antd'
 import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import Login from './pages/login/login'
