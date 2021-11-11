@@ -83,13 +83,13 @@ export default class Login extends Component {
         // 请求登录
         const { username, password } = values
         const result = await reqLogin(username, password)
-        console.log(result);
+        // console.log(result);
         if (result.status === 0) {
             message.success("登录成功")
             // 保存user
             const user = result.data
             memoryUtils.user = user // 保存在内存
-            storageUtils.saveUser(user) // 保存在local中
+            storageUtils.saveUser(user) // 保存在localStorage中
 
 
             // 登录成功需要跳转到管理界面

@@ -16,8 +16,9 @@ export const reqLogin = (username, password) => ajax('/login', { username, passw
 export const reqAddUser = (user) => ajax('/manage/user/add', user, "POST")
 // 天气
 // 接口有问题
-// export const reqWeather = (city) => ajax('https://api.66mz8.com/api/weather.php', {location: city})
-// reqWeather("武汉")
+export const reqWeather = (city) => ajax('https://api.66mz8.com/api/weather.php', {location: city})
+// reqWeather("武汉").then(value => console.log(value));
+
 
 /* 
     jsonp请求的接口函数

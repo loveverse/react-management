@@ -25,13 +25,14 @@ export default function ajax(url, data = {}, type = "GET") {
 }
 
 // 请求登录接口
-ajax('/api/login', { username: "Tom", password: "123456" }, "POST").then()
+ajax('/login', { username: "Tom", password: "123456" }, "POST").then()
 // 添加用户
-ajax("/api/manage/user/add", { username: "Tom", password: "123456", phone: "1234135213" }, "POST").then(
-    value => {
-        console.log(value);
-    }
-)
+ajax("/manage/user/add", { username: "Tom", password: "123456", phone: "1234135213" }, "POST").then()
+// 获取天气
+ajax("https://api.66mz8.com/api/weather.php",{location: "武汉"}).then()
+
+
+
 // 获取天气
 /* 
     https://api.asilu.com/weather/weather/?id=101010100
@@ -40,9 +41,7 @@ ajax("/api/manage/user/add", { username: "Tom", password: "123456", phone: "1234
     101020100,上海,上海,上海
 */
 // 接口有问题
-// ajax("https://api.66mz8.com/api/weather.php",{location: "武汉"}).then(value =>{
-//     console.log(value);
-// })
+
 // ajax("https://api.asilu.com/weather/weather",{id: 101200101}).then(value =>{
 //     console.log(value);
 // })

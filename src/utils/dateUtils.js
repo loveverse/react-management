@@ -11,5 +11,5 @@ export function formateDate(time){
     let second = date.getSeconds()
     second = second < 10? "0" + second:second
 
-    return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + hour + ":" + minute + ":" + second
+    return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + hour + ":" + minute + ":" + second
 }
