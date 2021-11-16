@@ -16,7 +16,7 @@ const menuList = [
             },
             {
                 title: "商品管理",
-                key: "/role",
+                key: "/product",
                 icon: ""
             }
         ]
@@ -25,6 +25,10 @@ const menuList = [
         title: "用户管理",
         key: "/user",
         icon: ""
+    },
+    {
+        title: "角色管理",
+        key: "/role"
     },
     {
         title: "图形图表",

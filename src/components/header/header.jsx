@@ -3,11 +3,13 @@ import { withRouter } from 'react-router-dom';
 import { message, Modal } from "antd";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
+import LinkButton from '../link-button/link-button';
 import menuList from '../../config/menuConfig'
 import { formateDate } from "../../utils/dateUtils";
 import { reqWeather } from '../../api'
 import memoryUtils from "../../utils/memoryUtils";
 import storageUtils from "../../utils/storageUtils";
+
 import "./index.less";
 
 class Header extends Component {
@@ -24,17 +26,19 @@ class Header extends Component {
     }
 
     getWeather = async () => {
-        const result = await reqWeather("武汉")
-        console.log(result);
-        try {
-            const { weather_icon, weather } = result.data[0]
-            this.setState({ dayPictureUrl: weather_icon, weather })
-        } catch (error) {
-            message.error("天气获取失败", error.message)
-        }
+        console.log("获取天气");
+        // const result = await reqWeather("武汉")
+        // console.log(result);
+        // try {
+        //     const { weather_icon, weather } = result.data[0]
+        //     this.setState({ dayPictureUrl: weather_icon, weather })
+        // } catch (error) {
+        //     message.error("天气获取失败", error.message)
+        // }
     }
 
 
+    // 动态显示标题，------------------------标题的文本会挪动---------------------------
     getTitle = () => {
         // 得到当前请求路径
         const path = this.props.location.pathname
@@ -93,7 +97,7 @@ class Header extends Component {
             <div className="header">
                 <div className="header-top">
                     <span>欢迎，{username}</span>
-                    <a href="#!" onClick={this.logout}>退出</a>
+                    <LinkButton href="#!" onClick={this.logout}>退出</LinkButton>
                 </div>
                 <div className="header-bottom">
                     <div className="header-bottom-left">{title}</div>
